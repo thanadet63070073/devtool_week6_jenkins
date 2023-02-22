@@ -1,5 +1,5 @@
 pipeline {
-   agent any
+    agent any
     stages {
          stage('pre -build') {
             steps {
@@ -9,10 +9,36 @@ pipeline {
         }
         stage('build') {
             steps {
-                
+
                 echo 'build in progress'
                 sh 'python3  Webhook/main.py'
             }
         }
+        stage('test') {
+            steps {
+
+               echo 'test in progress'
+            }
+        }
+        stage('deploy') {
+            steps {
+
+               echo 'deploy process'
+            }
+        }
+    }
+    post {
+         always {
+            echo 'Always'
+         }
+         success {
+            echo 'Only on Failure'
+         }
+         unstable {
+            echo 'Only run if unstable'
+         }
+         changed {
+            echo 'Only if status changed from Success to Failure or vice versa w.r.t. last run.'
+         }
     }
 }
